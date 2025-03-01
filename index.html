@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Classic 3D Door (Night Mode)</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Georgia", serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+            background: radial-gradient(circle, #ffffff, #dddddd);
+            color: black;
+            overflow: hidden;
+            flex-direction: column;
+            transition: background 0.5s, color 0.5s;
+        }
+
+        .dark-mode {
+            background: radial-gradient(circle, #121212, #000);
+            color: white;
+        }
+
+        .scene {
+            width: 100vw;
+            height: 70vh;
+            position: relative;
+            perspective: 1200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .door {
+            width: 260px;
+            height: 420px;
+            background: linear-gradient(to bottom, #5e3c2d, #3b2419);
+            position: absolute;
+            border-radius: 10px;
+            box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.8);
+            transform-origin: left;
+            transition: transform 1.2s ease-in-out;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 28px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+            border: 5px solid #3b2419;
+        }
+
+        .handle {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            width: 15px;
+            height: 50px;
+            background: gold;
+            border-radius: 10px;
+            transform: translateY(-50%);
+        }
+
+        .open {
+            transform: rotateY(-110deg);
+        }
+
+        .toggle-mode {
+            position: absolute;
+            bottom: 120px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background: darkred;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: 0.3s;
+            z-index: 1000;
+        }
+
+        .unlock-button {
+            position: absolute;
+            bottom: 70px;
+            padding: 12px 24px;
+            font-size: 20px;
+            border: none;
+            background: darkred;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+        .slider-container {
+            position: absolute;
+            bottom: 180px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80%;
+            max-width: 600px;
+            overflow: hidden;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+            background: rgba(20, 20, 20, 0.9);
+            border-radius: 10px;
+            padding: 10px;
+        }
+
+        .slider {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+        }
+
+        .card {
+            min-width: 100%;
+            height: 220px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-right: 20px;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: darkred;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .card a:hover {
+            background: red;
+        }
+
+        .show-slider {
+            opacity: 1;
+        }
+
+        .controls {
+            position: absolute;
+            bottom: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .controls button {
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            background: darkred;
+            color: white;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: 0.3s;
+        }
+
+    </style>
+</head>
+<body>
+
+    <button class="toggle-mode" onclick="toggleMode()">🌙 Night Mode</button>
+
+    <div class="scene">
+        <div class="door" id="door">
+            My Works
+            <div class="handle"></div>
+        </div>
+    </div>
+
+    <button class="unlock-button" onclick="toggleDoor()">Unlock</button>
+
+    <div class="slider-container" id="sliderContainer">
+        <div class="slider" id="slider">
+            <div class="card">
+                <h3>Stock Market Prediction</h3>
+                <p>AI-based stock market prediction tool.</p>
+                <a href="#" target="_blank">View Project</a>
+            </div>
+            <div class="card">
+                <h3>eMitra Digital Platform</h3>
+                <p>Upload & manage documents for government services.</p>
+                <a href="#" target="_blank">View Project</a>
+            </div>
+            <div class="card">
+                <h3>QR Code Generator</h3>
+                <p>Generate UPI & social media QR codes.</p>
+                <a href="#" target="_blank">View Project</a>
+            </div>
+            <div class="card">
+                <h3>WebRTC Chat App</h3>
+                <p>Real-time video & text chat using WebRTC.</p>
+                <a href="#" target="_blank">View Project</a>
+            </div>
+            <div class="card">
+                <h3>Flutter Mobile App</h3>
+                <p>Beautiful & interactive mobile app built in Flutter.</p>
+                <a href="#" target="_blank">View Project</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button onclick="prevSlide()">Prev</button>
+        <button onclick="nextSlide()">Next</button>
+    </div>
+
+    <script>
+        let isOpen = false;
+        let currentIndex = 0;
+
+        function toggleDoor() {
+            const door = document.getElementById("door");
+            const sliderContainer = document.getElementById("sliderContainer");
+            isOpen = !isOpen;
+            door.classList.toggle("open");
+
+            if (isOpen) {
+                setTimeout(() => {
+                    sliderContainer.classList.add("show-slider");
+                }, 1000);
+            } else {
+                sliderContainer.classList.remove("show-slider");
+            }
+        }
+
+        function toggleMode() {
+            document.body.classList.toggle("dark-mode");
+        }
+
+        function nextSlide() {
+            if (currentIndex < 4) currentIndex++;
+            document.getElementById("slider").style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+
+        function prevSlide() {
+            if (currentIndex > 0) currentIndex--;
+            document.getElementById("slider").style.transform = `translateX(-${currentIndex * 100}%)`;
+        }
+    </script>
+
+</body>
+</html>
